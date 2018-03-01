@@ -11,9 +11,9 @@ import com.unboundid.ldap.sdk.migrate.ldapjdk.LDAPEntry;
 public class Test {
 
     public static void main(String[] args) throws Exception {
-        String realEmail = "hubert@planetexpress.com";
+        String realEmail = "zoidberg@planetexpress.com";
         //String fakeEmail = asciify("))(notmyemail@anotherexample.com,");
-        String fakeEmail = "))(|(mail=notmyemail@anotherexample.com)(";
+        String fakeEmail = ")(mail<=zzzzzzzzzzzzzzzz@zplanetexpress.com";
         String email = String.format("%s%s", realEmail, fakeEmail);
         String filter = "(&(mail=" + email + ")(objectClass=*))";
         System.out.println(filter);
@@ -26,7 +26,8 @@ public class Test {
 
         SearchResult entries = connection.search(base, SearchScope.SUB, filter);
         if (entries.getSearchEntries().size() == 0) {
-            throw new RuntimeException("No LDAP search results!");
+            //throw new RuntimeException("No LDAP search results!");
+            System.out.println("No LDAP search results!");
         }
         for (SearchResultEntry entry : entries.getSearchEntries()) {
             LDAPEntry ldapEntry = new LDAPEntry(entry);
